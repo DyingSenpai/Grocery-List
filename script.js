@@ -49,11 +49,15 @@ function addItem(e) {
                 </button>
             </div>
             `;
-            //Append Child
-            list.appendChild(element);
-            //Display Alert
-            displayAlert(`Вы добавили ${value} в список`, 'success');
-            //Show Container
+        const deleteBtn = element.querySelector('.delete-btn');
+        const editBtn = element.querySelector('.edit-btn');
+        deleteBtn.addEventListener('click', deleteItem);
+        editBtn.addEventListener('click', editItem);
+        //Append Child
+        list.appendChild(element);
+        //Display Alert
+        displayAlert(`Вы добавили ${value} в список`, 'success');
+        //Show Container
         container.classList.add('show-container');
         // Add To Local Storage
         addToLocalStorage(id, value);
@@ -98,13 +102,34 @@ function clearItems() {
     //localStorage.removeItem('list'); 
 }
 
+//Delete Function
+
+function deleteItem(e) {
+    const element = e.currentTarget.parentElement.parentElement;
+    list.removeChild(element);
+    if(list.children.length === 0) {
+        container.classList.remove('show-container');
+    }
+    displayAlert('Элемент удалён из списка', 'danger');
+    setBackToDefault();
+    // Remove From Local Storage
+    removeFromLocalStorage(id);
+}
+
+//Edit Function 
+
+function editItem() {
+    console.log('item edited');
+}
+
+
 //Set Back To Default
 
 function setBackToDefault() {
     grocery.value = '';
     editFlag = false;
     editID = '';
-    submitBtn.textContent = 'submit';
+    submitBtn.textContent = 'Отправить';
 }
 
 // Local Storage 
@@ -112,3 +137,9 @@ function setBackToDefault() {
 function addToLocalStorage(id, value) {
     console.log('added to local storage');
 }
+
+function removeFromLocalStorage(id) {
+
+};
+
+/************ SETUP ITEMS ************/
